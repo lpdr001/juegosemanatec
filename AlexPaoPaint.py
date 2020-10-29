@@ -1,7 +1,7 @@
 """ Alejandro Hernández De la Torre / Lidia Paola Díaz Ramirez """
 from turtle import *
 from freegames import vector
-import math
+import turtle
 
 def line(start, end):
     "Draw line from start to end."
@@ -21,15 +21,16 @@ def square(start, end):
         left(90)
     end_fill()
 
+    
+    #Función que dibuja un circulo en la posición que selecciona el usuario
 def circle(start, end):
     "Draw circle from start to end."
     up()
     goto(start.x, start.y)
     down()
     begin_fill()
-    for count in range(360):
-        forward(math.sin(math.radians(1))*(math.sqrt((end.x - start.x)**2+(end.y - start.y)**2)))
-        left(1)
+    turtle.circle(end.x - start.x) 
+    
     end_fill()
 
 def rectangle(start, end):
