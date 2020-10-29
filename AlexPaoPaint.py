@@ -1,7 +1,7 @@
 """ Alejandro Hernández De la Torre / Lidia Paola Díaz Ramirez """
 from turtle import *
 from freegames import vector
-import math
+import turtle
 
 def line(start, end):
     "Draw line from start to end."
@@ -27,9 +27,8 @@ def circle(start, end):
     goto(start.x, start.y)
     down()
     begin_fill()
-    for count in range(360):
-        forward(math.sin(math.radians(1))*(math.sqrt((end.x - start.x)**2+(end.y - start.y)**2)))
-        left(1)
+    turtle.circle(end.x - start.x)
+    
     end_fill()
 
 def rectangle(start, end):
@@ -72,17 +71,17 @@ def store(key, value):
     state[key] = value
 
 state = {'start': None, 'shape': line}
-setup(420, 420, 370, 0)
+setup(420, 400, 370, 0)
 onscreenclick(tap)
 listen()
 onkey(undo, 'u')
+
+onkey(lambda: color('red'), 'R')
+onkey(lambda: color('pink'), 'P')
+onkey(lambda: color('blue'), 'B')
 onkey(lambda: color('black'), 'N')
 onkey(lambda: color('yellow'), 'Y')
 onkey(lambda: color('green'), 'G')
-onkey(lambda: color('Red'), 'R')
-onkey(lambda: color('blue'), 'B')
-onkey(lambda: color('red'), 'R')
-onkey(lambda: color('pink'), 'P')
 onkey(lambda: store('shape', line), 'l')
 onkey(lambda: store('shape', square), 's')
 onkey(lambda: store('shape', circle), 'c')
