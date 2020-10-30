@@ -1,5 +1,3 @@
-""" Alejandro Hernández De la Torre / Lidía Paola Diaz Ramita """
-
 from turtle import *
 from random import randrange, random
 from freegames import square, vector
@@ -7,6 +5,19 @@ from freegames import square, vector
 food = vector(0, 0)
 snake = [vector(10, 0)]
 aim = vector(0, -10)
+
+#Colores para la víbora y la comida
+SnakeColor = ['blue', 'green','orange', 'purple', 'black']
+FoodColor = ['blue', 'green','orange', 'purple', 'black']
+
+#El color se escogera al azar
+i = randrange(0,5)
+j = randrange(0,5)
+
+#Ciclo para que los colores no sean iguales
+while i == j:
+    j = randrange(0,5)
+
 
 def change(x, y):
     "Change snake direction."
@@ -17,9 +28,6 @@ def inside(head):
     "Return True if head inside boundaries."
     return -200 < head.x < 190 and -200 < head.y < 190
 
-def insidef(food):
-    "Return True if food inside boundaries."
-    return -200 < food.x < 190 and -200 < food.y < 190
 
 def move():
     "Move snake forward one segment."
@@ -27,9 +35,10 @@ def move():
     head.move(aim)
 
     if not inside(head) or head in snake:
-        square(head.x, head.y, 9, 'blue')
+        square(head.x, head.y, 9, 'pink')
         update()
-        return
+        print('Fin del juego')
+        exit()
 
     snake.append(head)
 
@@ -43,19 +52,37 @@ def move():
     clear()
 
     for body in snake:
-        square(body.x, body.y, 9,'orange')
-
-    square(food.x, food.y, 9, 'purple')
-    if insidef(food):
-        food.y = 1+ randrange(-4,2) * 15 
-        food.x = 1+ randrange(-4,2) * 15
-    else:
-        if food.y > 170: food.y = 170
-        elif food.y < -360: food.y = -360
-        if food.x > 420: food.x = 420
-        elif food.x < -420: food.x = -420    
+        square(body.x, body.y, 9,SnakeColor[i])
+    square(food.x, food.y, 9, FoodColor[j])   
     update()
     ontimer(move,110)
+
+def move_food():
+    #Mueve la comida una posición de forma aleatoria
+    #Movimientos de comida
+    moveList = [[10,0],[-10,0],[0,10],[0,-10],[10,10],[-10,-10],[-10,10],[10,-10]]
+    #Se realiza un movimiento al azar
+    indx = randrange (0,8)
+    #Se cambia el valor de comida
+    food.x += moveList[indx][0]
+    food.y += moveList[indx][1]
+
+    #Revisa si en la comida se sale
+    if not inside(food) or food == snake[-1]:
+        #Si se cumple cualquiera de estas condiciones la comida anula el movimiento anterior 
+        if indx%2 == 0:
+            food.x += moveList[indx+1][0]
+            food.y += moveList[indx+1][1]
+            food.x += moveList[indx+1][0]
+            food.y += moveList[indx+1][1]
+        else:
+            food.x += moveList[indx-1][0]
+            food.y += moveList[indx-1][1]
+            food.x += moveList[indx-1][0]
+            food.y += moveList[indx-1][1]
+             
+    ontimer(move_food, 600)
+
 
 setup(420, 420, 370, 0)
 hideturtle()
