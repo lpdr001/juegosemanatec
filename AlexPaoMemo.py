@@ -43,6 +43,14 @@ def tap(x, y):
         hide[spot] = False
         hide[mark] = False
         state['mark'] = None
+        # Aquí se abre un contador para poder contar los pares volteados
+        w = 0
+        w += 1
+        if w == 32:
+            goto(0,0)
+            write("FINISHEEEEED", font=('HELVETICA', 60, 'bold'))
+        print (w)
+
     
 def draw():
     "Draw image and tiles."
